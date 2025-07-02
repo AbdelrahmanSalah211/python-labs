@@ -5,7 +5,7 @@
         <div class="card p-4">
             <h2 class="mb-4">{{ action }} Book</h2>
             <form method="post">
-                {% csrf_token %}
+                {{ csrf_input|safe }}
                 <div class="mb-3">
                     <label class="form-label">Title:</label>
                     <input type="text" name="title" class="form-control" value="{{ book.title|default('') }}" required>
