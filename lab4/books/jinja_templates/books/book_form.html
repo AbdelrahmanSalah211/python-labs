@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card p-4">
+            <h2 class="mb-4">{{ action }} Book</h2>
+            <form method="post">
+                {{ csrf_input|safe }}
+                <div class="mb-3">
+                    <label class="form-label">Title:</label>
+                    <input type="text" name="title" class="form-control" value="{{ book.title|default('') }}" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description:</label>
+                    <textarea name="description" class="form-control" rows="4">{{ book.description|default('') }}</textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Rating (0.00 - 5.00):</label>
+                    <input type="number" name="rate" class="form-control" step="0.01" min="0" max="5" value="{{ book.rate|default('0.00') }}">
+                </div>
+                {% if book.id %}
+                <div class="mb-3">
+                    <label class="form-label">Views:</label>
+                    <input type="number" class="form-control" value="{{ book.views|default('0') }}" readonly>
+                </div>
+                {% endif %}
+                <div class="d-flex justify-content-between">
+                    <button type="submit" class="btn btn-custom">{{ action }}</button>
+                    <a href="{{ url('book_list') }}" class="btn btn-secondary">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
