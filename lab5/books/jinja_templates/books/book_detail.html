@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8 col-lg-6">
+        <div class="card p-4">
+            <h2 class="mb-3">{{ book.title }}</h2>
+            <div class="row mb-3">
+                <div class="col-sm-4">
+                    <span class="badge bg-info fs-6">Rating: {{ book.rate }}</span>
+                </div>
+                <div class="col-sm-4">
+                    <span class="badge bg-secondary fs-6">Views: {{ book.views }}</span>
+                </div>
+                <div class="col-sm-4">
+                    <span class="badge bg-primary fs-6">By: {{ book.user.username }}</span>
+                </div>
+            </div>
+            <div class="mb-3">
+                <strong>Categories:</strong>
+                {% for category in book.categories.all() %}
+                    <span class="badge bg-success me-1">{{ category.name }}</span>
+                {% endfor %}
+            </div>
+            <p class="mb-4">{{ book.description }}</p>
+            {% if book.isbn %}
+            <div class="mb-3">
+                <strong>ISBN Information:</strong><br>
+                <small>ISBN: {{ book.isbn.isbn_number }}</small><br>
+                <small>Author Title: {{ book.isbn.author_title }}</small><br>
+                <small>Book Title: {{ book.isbn.book_title }}</small>
+            </div>
+            {% endif %}
+            <div class="mb-3">
+                <small class="text-muted">
+                    Created: {{ book.created_at.strftime('%Y-%m-%d %H:%M') }}<br>
+                    Updated: {{ book.updated_at.strftime('%Y-%m-%d %H:%M') }}
+                </small>
+            </div>
+            <div class="d-flex justify-content-between">
+                {% if user.is_authenticated %}
+                    <a href="{{ url('book_update', book.id) }}" class="btn btn-outline-primary">Edit</a>
+                    <a href="{{ url('book_delete', book.id) }}" class="btn btn-outline-danger">Delete</a>
+                {% endif %}
+                <a href="{{ url('book_list') }}" class="btn btn-secondary">Back to List</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
